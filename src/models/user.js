@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-
+const List = require('./list')
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
       required: true
     }
   }]
+})
+
+userSchema.virtual('list', {
+  ref: 'List',
+  localField: '_id',
+  foreignField: 'owner'
 })
 
 const User = mongoose.model('User', userSchema)
